@@ -1,4 +1,4 @@
-Django on OpenShift
+Deployed site - http://python-webnews.apps.devcloud.eecs.qmul.ac.uk/news/1/
 ===================
 
 This git repository helps you get up and running quickly w/ a Django
