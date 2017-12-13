@@ -1,0 +1,38 @@
+{% extends "myapp/newBase.html" %}
+
+{% block content %}
+    <h2>{{ article.title }}</h2>
+    <a href="/news/{{ article.category }}"><h5>{{ article.get_category_display }}</h5></a>
+    <p>{{ article.body }}</p>
+    </br>
+    <h4>Comments</h4>
+    <div class="row">
+    {% for object in comments %}
+        <div class="col-xs-12 col-sm-6 col-md-8">
+        </br>
+        <b>{{ object.user_id }}</b> wrote
+        {% if loggedin %}
+            {% ifequal object.user_id.email user.email %}
+                <a href="/deletecomment/{{object.id}}/{{ article.id }}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            {% endifequal %}
+        {% endif %}
+            </br>
+        <p>{{ object.content }}</p>
+        </div>
+    {% endfor %}
+    </div>
+    {% if loggedin %}
+        <div class="form-group" style="width: 30%">
+            <form method="post" action="/postcomment/{{ article.id }}/">
+                {% csrf_token %}
+              <label for="comment">Comment:</label>
+              <textarea class="form-control" rows="5" id="comment" name = "comment"></textarea>
+              <button type="submit" id="submitComment" class="btn btn-primary" style="margin-top: 1em">Post Comment</button>
+            </form>
+        </div>
+    {% else %}
+        <span>Login to post comments.</span>
+    {% endif %}
+{% endblock content %}
